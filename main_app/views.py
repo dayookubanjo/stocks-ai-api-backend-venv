@@ -17,7 +17,7 @@ import sklearn
 
 # Load Models 
 
-symbol_encoder = pickle.load(open("app/symbol_encoder.sav", 'rb'))
+symbol_encoder = pickle.load(open("app/symbol_target_encoder.sav", 'rb'))
 linear_regression_model = pickle.load(open("app/linear_regression.sav", 'rb'))
 
 def index(request): 
@@ -39,8 +39,9 @@ class PredictAPIView(APIView):
             # array_1 = np.array([['AB',1000,100]])
             df = pd.DataFrame(array_1, columns=['Symbol', 'vol_moving_avg', 'adj_close_rolling_med'])
 
-            test_data = symbol_encoder.transform(df) 
-            y_pred = linear_regression_model.predict(test_data)
+            df['Symbol_2'] = symbol_encoder.transform(df['Symbol']) 
+            df = df.drop('Symbol', axis = 1) 
+            y_pred = linear_regression_model.predict(df)
 
 
             # predict method used to get the prediction

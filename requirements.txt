@@ -15,5 +15,6 @@ requests==2.25.1
 s3transfer==0.3.4
 whitenoise==5.2.0 
 scikit-learn
+category_encoders
 # findspark
 # pyspark
